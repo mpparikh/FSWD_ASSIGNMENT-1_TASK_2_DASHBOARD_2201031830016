@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="flex flex-col md:flex-row h-screen">
+        <!-- Sidebar (hidden on small screens) -->
+        <div class="bg-blue-100 w-full md:w-64 p-4 text-black">
+            <h2 class="text-2xl font-bold text-center mb-6">Student Dashboard</h2>
+            <ul>
+                <li><a href="#dashboardContent" class="block py-2 px-4 rounded hover:bg-gray-700 hover:text-white"
+                        id="dashboardLink">Dashboard</a></li>
+                <li><a href="#performanceSection" class="block py-2 px-4 rounded hover:bg-gray-700 hover:text-white"
+                        id="performanceLink">Performance</a></li>
+                <li><a href="#attendanceSection" class="block py-2 px-4 rounded hover:bg-gray-700 hover:text-white"
+                        id="attendanceLink">Attendance</a></li>
+                <li><a href="#assignmentsSection" class="block py-2 px-4 rounded hover:bg-gray-700 hover:text-white"
+                        id="assignmentsLink">Assignments</a></li>
+                <!-- Students Link -->
+                <li class="relative">
+                    <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700 hover:text-white flex items-center" id="studentsLink">
+                        Students
+                        <svg class="ml-2 w-4 h-4 transform rotate-0 transition-transform duration-200" id="arrowIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <!-- Dropdown List -->
+                    <ul id="studentsList" class="ml-4 hidden absolute left-0 mt-2 bg-gray-100 border-gray-300 rounded shadow-lg">
+                        <li><a href="#student1" class="text-blue-500 hover:underline student-link" data-student="student1">Rahi Patel</a></li>
+                        <li><a href="#student2" class="text-blue-500 hover:underline student-link" data-student="student2">Sita Sharma</a></li>
+                        <li><a href="#student3" class="text-blue-500 hover:underline student-link" data-student="student3">Tiya Rajput</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main content area -->
+        <div class="flex-1 p-6 overflow-auto">
+            <!-- Overall Dashboard Section -->
+            <section id="dashboardContent" class="content-section bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Overall Dashboard</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-blue-100 p-4 rounded-lg">
+                        <p class="text-gray-700">Class Average Performance:</p>
+                        <p class="font-semibold text-lg text-gray-800">80%</p>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg">
+                        <p class="text-gray-700">Class Average Attendance:</p>
+                        <p id="avgAttendance" class="font-semibold text-lg text-gray-800">85%</p>
+                    </div>
+                    <div class="bg-blue-100 p-4 rounded-lg">
+                        <p class="text-gray-700">Overall Assignments:</p>
+                        <p id="avgAssignment" class="font-semibold text-sm text-gray-800">Total Pending
+                                Assignments: 6</p>
+                        <p id="avgAssignment" class="font-semibold text-sm text-gray-800">Total Overdue
+                                Assignments: 2 (Due March 1st and March 3rd)</p>
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Default Content (empty until a section is selected) -->
+
+            <!-- Overall Performance Section -->
+            <div id="performanceSection" class="section hidden">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Overall Performance</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-blue-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Class Average Performance:</p>
+                            <p class="font-semibold text-lg text-gray-800">80%</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Top Performer:</p>
+                            <p class="font-semibold text-lg text-gray-800">Rahi Patel (95%)</p>
+                        </div>
+                        <div class="bg-yellow-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Lowest Performer:</p>
+                            <p class="font-semibold text-lg text-gray-800">Sita Sharma (60%)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overall Attendance Section -->
+
+            <div id="attendanceSection" class="section hidden">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Attendance Overview</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-blue-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Class Average Attendance:</p>
+                            <p id="avgAttendance" class="font-semibold text-lg text-gray-800">85%</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Top Absentee:</p>
+                            <p id="topAbsentee" class="font-semibold text-lg text-gray-800">Mark (5+ absences)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overall Assignments Section -->
+
+            <div id="assignmentsSection" class="section hidden">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Assignments Overview</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-blue-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Total Pending Assignments:</p>
+                            <p id="totalPendingAssignments" class="font-semibold text-lg text-gray-800"> 6</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Total Overdue Assignments:</p>
+                            <p id="totalOverdueAssignments" class="font-semibold text-lg text-gray-800"> 2 (Due March
+                                1st and March 3rd)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Student 1 (Rahi Patel) -->
+            <div id="student1" class="student-section hidden">
+                <!-- Student Overview Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Student Overview</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-blue-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Student Name:</p>
+                            <p class="font-semibold text-lg text-gray-800">Rahi Patel</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Student ID:</p>
+                            <p class="font-semibold text-lg text-gray-800">S12345</p>
+                        </div>
+                        <div class="bg-yellow-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Class:</p>
+                            <p class="font-semibold text-lg text-gray-800">10th Grade</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Performance and Grades Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Performance & Grades</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Current GPA:</p>
+                            <p class="font-semibold text-lg text-gray-800">3.8</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Average Grade:</p>
+                            <p class="font-semibold text-lg text-gray-800">B+</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Attendance Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Attendance</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Total Classes:</p>
+                            <p class="font-semibold text-lg text-gray-800">100</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Absences:</p>
+                            <p class="font-semibold text-lg text-gray-800">5</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Tardies:</p>
+                            <p class="font-semibold text-lg text-gray-800">2</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Upcoming Assignments Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Upcoming Assignments</h2>
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Math Homework:</p>
+                            <p class="font-semibold text-lg text-gray-800">Due: March 5th</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">History Project:</p>
+                            <p class="font-semibold text-lg text-gray-800">Due: March 10th</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Student 2 (Sita Sharma) -->
+            <div id="student2" class="student-section hidden">
+                <!-- Student Overview Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Student Overview</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-blue-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Student Name:</p>
+                            <p class="font-semibold text-lg text-gray-800">Sita Sharma</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Student ID:</p>
+                            <p class="font-semibold text-lg text-gray-800">S54321</p>
+                        </div>
+                        <div class="bg-yellow-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Class:</p>
+                            <p class="font-semibold text-lg text-gray-800">11th Grade</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Performance and Grades Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Performance & Grades</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Current GPA:</p>
+                            <p class="font-semibold text-lg text-gray-800">3.6</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Average Grade:</p>
+                            <p class="font-semibold text-lg text-gray-800">B</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Attendance Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Attendance</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Total Classes:</p>
+                            <p class="font-semibold text-lg text-gray-800">95</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Absences:</p>
+                            <p class="font-semibold text-lg text-gray-800">6</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Tardies:</p>
+                            <p class="font-semibold text-lg text-gray-800">3</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Upcoming Assignments Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Upcoming Assignments</h2>
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">English Essay:</p>
+                            <p class="font-semibold text-lg text-gray-800">Due: March 5th</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Biology Lab Report:</p>
+                            <p class="font-semibold text-lg text-gray-800">Due: March 8th</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Student 3 (Tiya Rajput) -->
+            <div id="student3" class="student-section hidden">
+                <!-- Student Overview Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Student Overview</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-blue-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Student Name:</p>
+                            <p class="font-semibold text-lg text-gray-800">Tiya Rajput</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Student ID:</p>
+                            <p class="font-semibold text-lg text-gray-800">S12347</p>
+                        </div>
+                        <div class="bg-yellow-100 p-4 rounded-lg">
+                            <p class="text-gray-700">Class:</p>
+                            <p class="font-semibold text-lg text-gray-800">10th Grade</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Performance and Grades Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Performance & Grades</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Current GPA:</p>
+                            <p class="font-semibold text-lg text-gray-800">3.6</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Average Grade:</p>
+                            <p class="font-semibold text-lg text-gray-800">B</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Attendance Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Attendance</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Total Classes:</p>
+                            <p class="font-semibold text-lg text-gray-800">100</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Absences:</p>
+                            <p class="font-semibold text-lg text-gray-800">8</p>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Tardies:</p>
+                            <p class="font-semibold text-lg text-gray-800">3</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Upcoming Assignments Section -->
+                <section class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Upcoming Assignments</h2>
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Math Homework:</p>
+                            <p class="font-semibold text-lg text-gray-800">Due: March 7th</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-gray-700">Science Lab Report:</p>
+                            <p class="font-semibold text-lg text-gray-800">Due: March 12th</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript to toggle sidebar for mobile view and sections -->
+    <!-- <script>
+        const studentsLink = document.getElementById('studentsLink');
+        const studentsList = document.getElementById('studentsList');
+        
+        studentsLink.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent the default action of the link
+            studentsList.classList.toggle('hidden'); // Toggle visibility of the dropdown
+        });
+    </script> -->
+    <script>
+        const performanceLink = document.getElementById('performanceLink');
+        const attendanceLink = document.getElementById('attendanceLink');
+        const assignmentsLink = document.getElementById('assignmentsLink');
+        const studentsLink = document.getElementById('studentsLink');
+        const studentsList = document.getElementById('studentsList');
+        const arrowIcon = document.getElementById('arrowIcon');
+        const studentLinks = document.querySelectorAll('.student-link');
+        const sections = document.querySelectorAll('.section');
+
+        // Toggle the student list visibility when "Students" is clicked
+        studentsLink.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent the default action of the link
+        studentsList.classList.toggle('hidden'); // Toggle visibility of the dropdown
+        arrowIcon.classList.toggle('rotate-180'); // Rotate the arrow when the dropdown is open
+    });
+
+        // Show selected section (performance, attendance, assignments)
+        performanceLink.addEventListener('click', () => {
+            hideAllSections();
+            document.getElementById('performanceSection').classList.remove('hidden');
+        });
+
+        attendanceLink.addEventListener('click', () => {
+            hideAllSections();
+            document.getElementById('attendanceSection').classList.remove('hidden');
+        });
+
+        assignmentsLink.addEventListener('click', () => {
+            hideAllSections();
+            document.getElementById('assignmentsSection').classList.remove('hidden');
+        });
+
+        // Hide all sections except the selected one
+        function hideAllSections() {
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+        }
+
+        // Show selected student data when clicking on a student's name
+        studentLinks.forEach(link => {
+            link.addEventListener('click', function () {
+                hideAllSections();
+                const studentId = this.getAttribute('data-student');
+                document.getElementById(studentId).classList.remove('hidden');
+                studentsList.classList.add('hidden'); // Hide the student list after selection
+            });
+        });
+    </script>
+
+</body>
+
+</html>
